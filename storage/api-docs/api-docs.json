@@ -1,0 +1,770 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Music Catalog API",
+        "description": "API для работы с каталогом исполнителей, альбомов и песен.",
+        "contact": {
+            "email": "admin@musiccatalog.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8080/api",
+            "description": "Local Development Server"
+        }
+    ],
+    "paths": {
+        "/api/albums": {
+            "get": {
+                "tags": [
+                    "Albums"
+                ],
+                "summary": "Получить список всех альбомов",
+                "description": "Возвращает список всех альбомов в базе данных",
+                "operationId": "735609843dcfb89ee4e12e340eddca25",
+                "responses": {
+                    "200": {
+                        "description": "Успешный ответ с данными альбомов",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Album"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка сервера"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Albums"
+                ],
+                "summary": "Создать новый альбом",
+                "description": "Создает новый альбом и возвращает его данные",
+                "operationId": "2252aa8fd63b7d2fa1203c1735943d46",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "artist_id",
+                                    "release_year"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "description": "Название альбома",
+                                        "type": "string"
+                                    },
+                                    "artist_id": {
+                                        "description": "ID исполнителя",
+                                        "type": "integer"
+                                    },
+                                    "release_year": {
+                                        "description": "Год выпуска альбома",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Альбом успешно создан",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Album"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка сервера"
+                    }
+                }
+            }
+        },
+        "/api/albums/{id}": {
+            "get": {
+                "tags": [
+                    "Albums"
+                ],
+                "summary": "Получить альбом по ID",
+                "description": "Возвращает информацию об альбоме по его ID",
+                "operationId": "71e9c4179582355e89419e6f6994c418",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID альбома",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Информация о найденном альбоме",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Album"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Альбом не найден"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Albums"
+                ],
+                "summary": "Обновить данные альбома",
+                "description": "Обновляет данные альбома по его ID",
+                "operationId": "1300ec85cc590b1ae1468c9bf8db122d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID альбома",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "artist_id",
+                                    "release_year"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "description": "Название альбома",
+                                        "type": "string"
+                                    },
+                                    "artist_id": {
+                                        "description": "ID исполнителя",
+                                        "type": "integer"
+                                    },
+                                    "release_year": {
+                                        "description": "Год выпуска альбома",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Альбом успешно обновлен",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Album"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Альбом не найден"
+                    },
+                    "500": {
+                        "description": "Ошибка сервера"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Albums"
+                ],
+                "summary": "Удалить альбом",
+                "description": "Удаляет альбом по его ID",
+                "operationId": "cabfc7c152115607d310827d46a82d5a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID альбома",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Альбом успешно удален"
+                    },
+                    "404": {
+                        "description": "Альбом не найден"
+                    },
+                    "500": {
+                        "description": "Ошибка сервера"
+                    }
+                }
+            }
+        },
+        "/api/artists": {
+            "get": {
+                "tags": [
+                    "Artists"
+                ],
+                "summary": "Получить список всех исполнителей",
+                "description": "Возвращает список всех исполнителей в базе данных",
+                "operationId": "2c8aed1387cca1c65d98da7ee11ac926",
+                "responses": {
+                    "200": {
+                        "description": "Успешный ответ с данными исполнителей",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Artist"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка сервера"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Artists"
+                ],
+                "summary": "Создать исполнителя",
+                "description": "Создает исполнителя и возвращает его данные",
+                "operationId": "83d2888bdc6fac66b9a7cc81c4c950fb",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "Имя исполнителя",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Исполнитель успешно создан",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Artist"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка сервера"
+                    }
+                }
+            }
+        },
+        "/api/artists/{id}": {
+            "put": {
+                "tags": [
+                    "Artists"
+                ],
+                "summary": "Обновить данные исполнителя",
+                "operationId": "5a5632ea389f9a05336f8d035f5a44c0",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID исполнителя",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "Имя исполнителя",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Исполнитель обновлен",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Artist"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Исполнитель не найден"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Artists"
+                ],
+                "summary": "Удалить исполнителя",
+                "operationId": "4f6d8bd2c8b4b738af7589b72348ac20",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID исполнителя",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Исполнитель удален"
+                    },
+                    "404": {
+                        "description": "Исполнитель не найден"
+                    }
+                }
+            }
+        },
+        "/api/songs": {
+            "get": {
+                "tags": [
+                    "Songs"
+                ],
+                "summary": "Получить список всех песен",
+                "description": "Возвращает список всех песен в базе данных",
+                "operationId": "0388bb28c35eec49b8b492d169ce3575",
+                "responses": {
+                    "200": {
+                        "description": "Успешный ответ с данными песен",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Song"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка сервера"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Songs"
+                ],
+                "summary": "Создать новую песню",
+                "description": "Создает новую песню в базе данных",
+                "operationId": "2f1970b82d91cc715578d972189f19cb",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Song"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Создана новая песня",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Song"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Некорректные данные"
+                    },
+                    "500": {
+                        "description": "Ошибка сервера"
+                    }
+                }
+            }
+        },
+        "/api/songs/{id}": {
+            "get": {
+                "tags": [
+                    "Songs"
+                ],
+                "summary": "Получить информацию о песне",
+                "description": "Возвращает информацию о песне по ее ID",
+                "operationId": "4325a96361d1d3820cc0580eaae9197c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID песни",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешный ответ с данными песни",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Song"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Песня не найдена"
+                    },
+                    "500": {
+                        "description": "Ошибка сервера"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Songs"
+                ],
+                "summary": "Обновить информацию о песне",
+                "description": "Обновляет информацию о песне по ее ID",
+                "operationId": "452de7f8f11a121cd11e9430565632c3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID песни",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Song"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Информация о песне обновлена",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Song"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Песня не найдена"
+                    },
+                    "500": {
+                        "description": "Ошибка сервера"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Songs"
+                ],
+                "summary": "Удалить песню",
+                "description": "Удаляет песню по ее ID",
+                "operationId": "829c1a52ae5013ce3ff4b9829a31485f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID песни",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Песня удалена"
+                    },
+                    "404": {
+                        "description": "Песня не найдена"
+                    },
+                    "500": {
+                        "description": "Ошибка сервера"
+                    }
+                }
+            }
+        },
+        "/api/songs/{id}/add-to-album": {
+            "post": {
+                "tags": [
+                    "Songs"
+                ],
+                "summary": "Добавить песню в альбом",
+                "description": "Добавляет песню в альбом по ID",
+                "operationId": "5645e43aef0d6a587bff7b411c6be977",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID песни",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "album_id": {
+                                        "description": "ID альбома",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "track_number": {
+                                        "description": "Номер трека в альбоме",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Песня добавлена в альбом",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Song added to album successfully."
+                                        },
+                                        "album": {
+                                            "$ref": "#/components/schemas/Album"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Альбом или песня не найдены"
+                    },
+                    "500": {
+                        "description": "Ошибка сервера"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Album": {
+                "required": [
+                    "title",
+                    "artist_id",
+                    "release_year"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "ID альбома",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "title": {
+                        "description": "Название альбома",
+                        "type": "string",
+                        "example": "Abbey Road"
+                    },
+                    "artist_id": {
+                        "description": "ID исполнителя",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "release_year": {
+                        "description": "Год выпуска альбома",
+                        "type": "integer",
+                        "example": 1969
+                    },
+                    "created_at": {
+                        "description": "Дата создания записи",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-11-01T14:30:00Z"
+                    },
+                    "updated_at": {
+                        "description": "Дата последнего обновления записи",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-11-01T14:30:00Z"
+                    }
+                },
+                "type": "object"
+            },
+            "Artist": {
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "ID исполнителя",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "Имя исполнителя",
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "description": "Дата создания",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Дата обновления",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "Song": {
+                "required": [
+                    "title",
+                    "artist_id",
+                    "album_id",
+                    "release_date"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "ID песни",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "title": {
+                        "description": "Название песни",
+                        "type": "string",
+                        "example": "Hey Jude"
+                    },
+                    "artist_id": {
+                        "description": "ID исполнителя",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "album_id": {
+                        "description": "ID альбома",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "release_date": {
+                        "description": "Дата выпуска",
+                        "type": "string",
+                        "format": "date",
+                        "example": "1968-08-26"
+                    },
+                    "created_at": {
+                        "description": "Дата создания записи",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-11-01T14:30:00Z"
+                    },
+                    "updated_at": {
+                        "description": "Дата последнего обновления записи",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-11-01T14:30:00Z"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Albums",
+            "description": "Albums"
+        },
+        {
+            "name": "Artists",
+            "description": "Artists"
+        },
+        {
+            "name": "Songs",
+            "description": "Songs"
+        }
+    ]
+}
